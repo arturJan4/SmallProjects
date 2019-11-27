@@ -9,3 +9,6 @@ Then create an inventory class which keeps track of various products and can sum
 [idea](https://github.com/karan/Projects#classes)
 
 1    
+Then create an inventory class which keeps track of various products and can sum up the inventory value.   
+ add a line
+[idea](https://github.com/karan/Projects#classes)    
