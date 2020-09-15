@@ -2,12 +2,12 @@
 Basically some of the stuff that I want to archive, but they aren't worth a seperate repository.
 
 ---
-## Table of contents <!-- hack: %20 is a space character -->
+## Table of contents <!-- hack: - is for a space character, use all lowercase-->
 C++:
-* [Product Inventory Project](#Product%20Inventory%20Project)
+* [Product Inventory Project](#product-inventory-project)
 
 Python:
-* [Game Of Life](#Game%20Of%20Life)
+* [Game Of Life](#game-of-life)
 
 ---
 ## Product Inventory Project
@@ -20,6 +20,6 @@ Python:
 ---
 ## Game Of Life
 Simple Conway's Game of Life using terminal **(colorama FTW!)** graphics
-1. Infite loop to simulate a board given as a 2d array of ones and zeros directly in the code, or in the file *toad.txt*
-2. Can generate random boards of given size and simulate them
-3. Unit tested
+1. Infite loop to simulate a board given as a 2d array of ones and zeros directly in the code, or in the file *toad.txt*.
+2. Can generate random boards of given size and simulate them.
+3. Unit tested.
