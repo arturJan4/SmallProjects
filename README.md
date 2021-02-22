@@ -19,7 +19,7 @@ Python:
 
 ---
 ## Game Of Life
-![Example frame](./gameoflife.png)
+![Example frame](./gameoflife.png)  
 Simple Conway's Game of Life using terminal **(colorama FTW!)** graphics
 1. Infite loop to simulate a board given as a 2d array of ones and zeros directly in the code, or in the file *toad.txt*.
 2. Can generate random boards of given size and simulate them.
