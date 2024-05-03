@@ -22,7 +22,7 @@ class TestHTMLNode(unittest.TestCase):
         node = HTMLNode("h1", "text", None, {"class": "cl1"})
         self.assertEqual(node.props_to_html(), 'class="cl1"')
 
-        node = HTMLNode("h1", "text", None, 
+        node = HTMLNode("h1", "text", None,
                         {"class": "cl1 cl2", "target": "_blank"})
         self.assertEqual(node.props_to_html(),
                          'class="cl1 cl2" target="_blank"')
