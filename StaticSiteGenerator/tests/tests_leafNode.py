@@ -15,13 +15,24 @@ class TestHTMLNode(unittest.TestCase):
         self.assertNotEqual(node, node2)
 
     def test_to_html(self):
+        node = LeafNode(value="text")
+        self.assertEqual(node.to_html(), "text")
+
+        node = LeafNode("p", "text")
+        self.assertEqual(node.to_html(), "<p>text</p>")
+
         node = LeafNode("p", "text", {"class": "cl1"})
         self.assertEqual(node.to_html(), '<p class="cl1">text</p>')
 
-        node = LeafNode("a", "Click me!",
-                        {"href": "https://www.google.com"})
-        self.assertEqual(node.to_html(),
-                         '<a href="https://www.google.com">Click me!</a>')
+        node = LeafNode("a", "Click me!", {"href": "https://www.google.com"})
+        self.assertEqual(
+            node.to_html(), '<a href="https://www.google.com">Click me!</a>'
+        )
+
+    def test_to_html_raises(self):
+        no_tag = LeafNode(tag="p", value=None)
+        with self.assertRaises(ValueError):
+            html = no_tag.to_html()
 
 
 if __name__ == "__main__":

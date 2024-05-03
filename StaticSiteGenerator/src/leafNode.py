@@ -12,7 +12,10 @@ class LeafNode(HTMLNode):
         if self.tag is None:
             return self.value
 
+        starting_tag = f"<{self.tag}>"
         tag_attributes = self.props_to_html()
-        starting_tag = f"<{self.tag} {tag_attributes}>"
+        if len(tag_attributes) > 0:
+            starting_tag = f"<{self.tag} {tag_attributes}>"
+
         closing_tag = f"</{self.tag}>"
         return starting_tag + self.value + closing_tag
