@@ -1,7 +1,7 @@
 import unittest
 
 from src.HTMLNode import LeafNode
-from src.textNode import TextNode, text_node_to_html_node
+from src.textNode import TextNode, TextTypes, split_nodes_delimiter, text_node_to_html_node
 
 
 class TestTextNode(unittest.TestCase):
@@ -66,6 +66,90 @@ class TestConvertTextToHTML(unittest.TestCase):
             node = TextNode(text="", text_type="pdf")
             test = text_node_to_html_node(node)
 
+
+class TestSplitNodesDelimiter(unittest.TestCase):
+    def test_no_delimiter(self):
+        node = TextNode("test", TextTypes.TEXT)
+        new_nodes = split_nodes_delimiter([node], "**", TextTypes.BOLD)
+
+        expected = [
+            TextNode("test", TextTypes.TEXT),
+        ]
+        self.assertEqual(new_nodes, expected)  
+
+    def test_bad_type(self):
+        node = TextNode("test", TextTypes.CODE)
+        new_nodes = split_nodes_delimiter([node], "**", TextTypes.BOLD)
+
+        expected = [
+            TextNode("test", TextTypes.CODE),
+        ]
+        self.assertEqual(new_nodes, expected)  
+
+    def test_bad_and_correct_type(self):
+        node = TextNode("wrong", TextTypes.CODE)
+        node2 = TextNode("**test**", TextTypes.TEXT)
+        new_nodes = split_nodes_delimiter([node, node2], "**", TextTypes.BOLD)
+
+        expected = [
+            TextNode("wrong", TextTypes.CODE),
+            TextNode("test", TextTypes.BOLD)
+        ]
+        self.assertEqual(new_nodes, expected)  
+
+    def test_whole(self):
+        node = TextNode("**test**", TextTypes.TEXT)
+        new_nodes = split_nodes_delimiter([node], "**", TextTypes.BOLD)
+
+        expected = [
+            TextNode("test", TextTypes.BOLD),
+        ]
+        self.assertEqual(new_nodes, expected)    
+
+    def test_multiple(self):
+        node = TextNode("normal **test** more **bold**", TextTypes.TEXT)
+        new_nodes = split_nodes_delimiter([node], "**", TextTypes.BOLD)
+
+        expected = [
+            TextNode("normal ", TextTypes.TEXT),
+            TextNode("test", TextTypes.BOLD),
+            TextNode(" more ", TextTypes.TEXT),
+            TextNode("bold", TextTypes.BOLD)
+        ]
+        self.assertEqual(new_nodes, expected)      
+
+    def test_italic(self):
+        node = TextNode("This is text with a *italic* word", TextTypes.TEXT)
+        new_nodes = split_nodes_delimiter([node], "*", TextTypes.ITALIC)
+
+        expected = [
+            TextNode("This is text with a ", TextTypes.TEXT),
+            TextNode("italic", TextTypes.ITALIC),
+            TextNode(" word", TextTypes.TEXT),
+        ]
+        self.assertEqual(new_nodes, expected)
+
+    def test_code(self):
+        node = TextNode("This is text with a `code block` word", TextTypes.TEXT)
+        new_nodes = split_nodes_delimiter([node], "`", TextTypes.CODE)
+
+        expected = [
+            TextNode("This is text with a ", TextTypes.TEXT),
+            TextNode("code block", TextTypes.CODE),
+            TextNode(" word", TextTypes.TEXT),
+        ]
+        self.assertEqual(new_nodes, expected)
+
+    def test_uneven_delimiters_errors(self):
+        with self.assertRaises(ValueError):
+            node = TextNode("**test", TextTypes.TEXT)
+            new_nodes = split_nodes_delimiter([node], "**", TextTypes.BOLD)
+
+
+    def test_uneven_delimiters_errors_bigger(self):
+        with self.assertRaises(ValueError):
+            node = TextNode("--  **test . ", TextTypes.TEXT)
+            new_nodes = split_nodes_delimiter([node], "**", TextTypes.BOLD)
 
 if __name__ == "__main__":
     unittest.main()

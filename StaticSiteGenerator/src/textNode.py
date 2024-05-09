@@ -50,3 +50,32 @@ def text_node_to_html_node(text_node: "TextNode"):
             props={"src": text_node.url, "alt": text_node.text},
         )
     raise ValueError(f"Text type ({text_node.text_type}) not recognized")
+
+
+def split_nodes_delimiter(old_nodes: list[TextNode], delimiter: str, text_type: TextTypes):
+    new_nodes = []
+    split_nodes = []
+
+    for old_node in old_nodes:
+        if old_node.text_type != TextTypes.TEXT.value:
+            # we only split TextNodes of type text
+            new_nodes.append(old_node)
+            continue
+
+        split_text = old_node.text.split(delimiter)
+        if len(split_text) % 2 == 0:
+            raise ValueError(f"Invalid Markdown, wrong number of delimiters: {delimiter}")
+
+        for idx, chunk in enumerate(split_text):
+            if chunk == "":
+                continue
+
+            if idx % 2 == 0:
+                # not in delimiter scope
+                split_nodes.append(TextNode(chunk, TextTypes.TEXT))
+                continue
+
+            split_nodes.append(TextNode(chunk, text_type))
+
+    new_nodes.extend(split_nodes)
+    return new_nodes
