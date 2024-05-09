@@ -2,6 +2,7 @@ from enum import StrEnum
 from typing import Any
 
 from src.HTMLNode import LeafNode
+from src.markdown import extract_markdown_images, extract_markdown_links
 
 
 class TextTypes(StrEnum):
@@ -32,7 +33,7 @@ class TextNode:
         return f"TextNode({self.text}, {self.text_type}, {self.url})"
 
 
-def text_node_to_html_node(text_node: "TextNode"):
+def text_node_to_html_node(text_node: "TextNode") -> LeafNode:
     if text_node.text_type == TextTypes.TEXT.value:
         return LeafNode(value=text_node.text)
     elif text_node.text_type == TextTypes.BOLD.value:
@@ -53,8 +54,7 @@ def text_node_to_html_node(text_node: "TextNode"):
 
 
 def split_nodes_delimiter(old_nodes: list[TextNode], delimiter: str, text_type: TextTypes):
-    new_nodes = []
-    split_nodes = []
+    new_nodes: list[TextNode] = []
 
     for old_node in old_nodes:
         if old_node.text_type != TextTypes.TEXT.value:
@@ -66,6 +66,7 @@ def split_nodes_delimiter(old_nodes: list[TextNode], delimiter: str, text_type: 
         if len(split_text) % 2 == 0:
             raise ValueError(f"Invalid Markdown, wrong number of delimiters: {delimiter}")
 
+        split_nodes: list[TextNode] = []
         for idx, chunk in enumerate(split_text):
             if chunk == "":
                 continue
@@ -76,6 +77,77 @@ def split_nodes_delimiter(old_nodes: list[TextNode], delimiter: str, text_type: 
                 continue
 
             split_nodes.append(TextNode(chunk, text_type))
-
-    new_nodes.extend(split_nodes)
+        new_nodes.extend(split_nodes)
     return new_nodes
+
+
+def split_nodes_image(old_nodes: list[TextNode]) -> list[TextNode]:
+    new_nodes: list[TextNode] = []
+
+    for old_node in old_nodes:
+        if old_node.text_type != TextTypes.TEXT.value:
+            # we only split TextNodes of type text
+            new_nodes.append(old_node)
+            continue
+
+        text_to_process: str = old_node.text
+        images = extract_markdown_images(text_to_process)
+        split_nodes: list[TextNode] = []
+        for alt, url in images:
+            split = text_to_process.split(f"![{alt}]({url})", maxsplit=1)
+            if len(split) == 0:
+                raise ValueError("Image not found")
+
+            split_nodes.append(TextNode(split[0], TextTypes.TEXT))
+            split_nodes.append(TextNode(alt, TextTypes.IMAGE, url))
+
+            if len(split) == 2:
+                text_to_process = split[1]
+
+        if text_to_process:
+            split_nodes.append(TextNode(text_to_process, TextTypes.TEXT))
+
+        new_nodes.extend(split_nodes)
+    return new_nodes
+
+
+def split_nodes_link(old_nodes: list[TextNode]) -> list[TextNode]:
+    new_nodes: list[TextNode] = []
+
+    for old_node in old_nodes:
+        if old_node.text_type != TextTypes.TEXT.value:
+            # we only split TextNodes of type text
+            new_nodes.append(old_node)
+            continue
+
+        text_to_process: str = old_node.text
+        links = extract_markdown_links(text_to_process)
+        split_nodes: list[TextNode] = []
+        for anchor, url in links:
+            split = text_to_process.split(f"[{anchor}]({url})", maxsplit=1)
+            if len(split) == 0:
+                raise ValueError("Link not found")
+
+            split_nodes.append(TextNode(split[0], TextTypes.TEXT))
+            split_nodes.append(TextNode(anchor, TextTypes.LINK, url))
+
+            if len(split) == 2:
+                text_to_process = split[1]
+
+        if text_to_process:
+            split_nodes.append(TextNode(text_to_process, TextTypes.TEXT))
+
+        new_nodes.extend(split_nodes)
+    return new_nodes
+
+
+def markdown_text_to_textNodes(text: str) -> list[TextNode]:
+    nodes: list[TextNode] = [TextNode(text, TextTypes.TEXT)]
+
+    nodes = split_nodes_delimiter(nodes, "**", TextTypes.BOLD)
+    nodes = split_nodes_delimiter(nodes, "*", TextTypes.ITALIC)
+    nodes = split_nodes_delimiter(nodes, "`", TextTypes.CODE)
+    nodes = split_nodes_image(nodes)
+    nodes = split_nodes_link(nodes)
+
+    return nodes
