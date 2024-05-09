@@ -1,11 +1,22 @@
+from typing import Any, Optional
+
+
 class HTMLNode:
-    def __init__(self, tag=None, value=None, children=None, props=None) -> None:
+    def __init__(
+        self,
+        tag: Optional[str] = None,
+        value: Optional[str] = None,
+        children=None,
+        props=None,
+    ) -> None:
         self.tag = tag
         self.value = value
         self.children = children
         self.props = props
 
-    def __eq__(self, value: object) -> bool:
+    def __eq__(self, value: Any) -> bool:
+        if not isinstance(value, HTMLNode):
+            return NotImplemented
         if self.tag != value.tag:
             return False
         if self.value != value.value:
@@ -24,7 +35,7 @@ class HTMLNode:
         # convert node to HTML that's possible to render
         raise NotImplementedError("to_html() not implemented")
 
-    def props_to_html(self):
+    def props_to_html(self) -> str:
         # properties in html are a sequence of key=value assignments
         if not self.props or len(self.props) == 0:
             return ""
@@ -33,7 +44,7 @@ class HTMLNode:
             html.append(f'{key}="{value}"')
         return " ".join(html)
 
-    def __get_starting_and_closing_tags__(self):
+    def __get_starting_and_closing_tags__(self) -> tuple[str, str]:
         starting_tag = f"<{self.tag}>"
         tag_attributes = self.props_to_html()
         if len(tag_attributes) > 0:

@@ -1,4 +1,5 @@
 from enum import StrEnum
+from typing import Any
 
 from src.HTMLNode import LeafNode
 
@@ -18,7 +19,7 @@ class TextNode:
         self.text_type = text_type
         self.url = url
 
-    def __eq__(self, value: object) -> bool:
+    def __eq__(self, value: Any) -> bool:
         if self.text != value.text:
             return False
         if self.text_type != value.text_type:
@@ -44,6 +45,8 @@ def text_node_to_html_node(text_node: "TextNode"):
         return LeafNode(tag="a", value=text_node.text, props={"href": text_node.url})
     elif text_node.text_type == TextTypes.IMAGE.value:
         return LeafNode(
-            tag="img", value="", props={"src": text_node.url, "alt": text_node.text}
+            tag="img",
+            value="",
+            props={"src": text_node.url, "alt": text_node.text},
         )
     raise ValueError(f"Text type ({text_node.text_type}) not recognized")

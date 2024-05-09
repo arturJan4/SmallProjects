@@ -1,7 +1,6 @@
 import unittest
 
-from src.HTMLNode import ParentNode
-from src.HTMLNode import LeafNode
+from src.HTMLNode import LeafNode, ParentNode
 
 
 class TestParentNode(unittest.TestCase):
@@ -55,7 +54,10 @@ class TestParentNode(unittest.TestCase):
                 LeafNode(None, "\n"),
                 ParentNode(
                     tag="h2",
-                    children=[LeafNode(None, "hello "), LeafNode("b", "world!")],
+                    children=[
+                        LeafNode(None, "hello "),
+                        LeafNode("b", "world!"),
+                    ],
                     props={"class": "test"},
                 ),
                 LeafNode(None, "\n"),

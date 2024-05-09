@@ -25,9 +25,7 @@ class TestHTMLNode(unittest.TestCase):
         self.assertEqual(node.to_html(), '<p class="cl1">text</p>')
 
         node = LeafNode("a", "Click me!", {"href": "https://www.google.com"})
-        self.assertEqual(
-            node.to_html(), '<a href="https://www.google.com">Click me!</a>'
-        )
+        self.assertEqual(node.to_html(), '<a href="https://www.google.com">Click me!</a>')
 
     def test_to_html_raises(self):
         no_tag = LeafNode(tag="p", value=None)
