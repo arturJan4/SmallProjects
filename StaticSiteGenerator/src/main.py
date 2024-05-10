@@ -1,12 +1,10 @@
+from converterMD import generate_pages_recursive
 from dirCopy import copy_dirs
-from textNode import TextNode
 
 
 def main():
-    example = TextNode("example test node", "italic", "example.com")
-    print(example)
-
-    copy_dirs("static", "public")
+    copy_dirs("markdown_page/static", "public")
+    generate_pages_recursive("markdown_page/content/", "markdown_page/template.html", "public/")
 
 
 if __name__ == "__main__":
