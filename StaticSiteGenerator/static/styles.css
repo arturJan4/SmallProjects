@@ -1,0 +1,61 @@
+
+* {
+    background-color: blanchedalmond;
+}
+
+.img-box {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+p {
+    padding-left: 0.5%;
+}
+
+.box
+{
+    border-radius: 2%;
+    border-style:solid;
+    border-color: blue;  
+}
+
+img {
+    border-radius: 10%;
+    border-style: outset;
+    border-bottom-color: blue;
+    height: 640 px;
+    width: auto;
+}
+
+.title {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: xx-large;
+}
+
+.title-frame {
+    border-style: ridge;
+    border-radius: 2%;
+    border-color: rgb(17, 196, 121);
+}
+
+ul li {
+    list-style-type: circle;
+    padding-right: 2%;
+    padding-left: 2%;
+}
+
+ul li .menu {
+    margin-bottom: 2%;
+    margin-left: 0%;
+}
+
+.menu li + li {
+    margin-top: 5%;
+}
+
+li a {
+    margin-left: 0%;
+}
