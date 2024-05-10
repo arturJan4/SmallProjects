@@ -1,9 +1,13 @@
 import re
 
-from src.textNode import TextNode, TextTypes
+from textNode import TextNode, TextTypes
 
 
 def markdown_text_to_textNodes(text: str) -> list[TextNode]:
+    """
+    Returns:
+        list of TextNodes describing markdown text
+    """
     nodes: list[TextNode] = [TextNode(text, TextTypes.TEXT)]
 
     nodes = split_nodes_delimiter(nodes, "**", TextTypes.BOLD)
