@@ -1,6 +1,6 @@
 import re
 
-from textNode import TextNode, TextTypes
+from src.textNode import TextNode, TextTypes
 
 
 def markdown_text_to_textNodes(text: str) -> list[TextNode]:

@@ -1,7 +1,7 @@
-from HTMLNode import HTMLNode, ParentNode
-from markdownBlock import BlockTypes, block_to_block_type, markdown_to_blocks
-from markdownText import TextNode, TextTypes, markdown_text_to_textNodes
-from textNode import text_node_to_html_node
+from src.HTMLNode import HTMLNode, ParentNode
+from src.markdownBlock import BlockTypes, block_to_block_type, markdown_to_blocks
+from src.markdownText import TextNode, TextTypes, markdown_text_to_textNodes
+from src.textNode import text_node_to_html_node
 
 
 def markdown_to_html(markdown) -> HTMLNode:

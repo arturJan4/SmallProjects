@@ -1,7 +1,7 @@
 import os
 import pathlib
 
-from markdownNodeGen import markdown_to_html
+from src.markdownNodeGen import markdown_to_html
 
 
 def extract_title(markdown: str):

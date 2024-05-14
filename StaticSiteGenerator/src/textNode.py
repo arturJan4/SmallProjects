@@ -1,7 +1,7 @@
 from enum import StrEnum
 from typing import Any
 
-from HTMLNode import LeafNode
+from src.HTMLNode import LeafNode
 
 
 class TextTypes(StrEnum):

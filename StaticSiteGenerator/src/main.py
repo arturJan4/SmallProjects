@@ -1,5 +1,5 @@
-from converterMD import generate_pages_recursive
-from dirCopy import copy_dirs
+from src.converterMD import generate_pages_recursive
+from src.dirCopy import copy_dirs
 
 
 def main():
