@@ -47,10 +47,18 @@ class TestExtractingFromMarkdown(unittest.TestCase):
 
         self.assertEqual(actual, expected)
 
+
     def test_extract_markdown_links(self):
         text = "This is text with an [link text](example.com)."
         actual = extract_markdown_links(text)
         expected = [("link text", "example.com")]
+
+        self.assertEqual(actual, expected)
+
+    def test_extract_markdown_links_only(self):
+        text = "[link text](/)."
+        actual = extract_markdown_links(text)
+        expected = [("link text", "/")]
 
         self.assertEqual(actual, expected)
 
@@ -211,6 +219,17 @@ class TestSplitNodesLinks(unittest.TestCase):
         new_nodes = split_nodes_link([node])
         expected = [node]
 
+        self.assertEqual(new_nodes, expected)
+
+    def test_linkonly(self):
+        node = TextNode(
+            "[Home](/)",
+            TextTypes.TEXT,
+        )
+        new_nodes = split_nodes_link([node])
+        expected = [
+            TextNode("Home", TextTypes.LINK, "/"),
+        ]
         self.assertEqual(new_nodes, expected)
 
     def test_simple(self):

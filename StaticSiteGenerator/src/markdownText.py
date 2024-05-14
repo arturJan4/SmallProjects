@@ -94,7 +94,8 @@ def split_nodes_link(old_nodes: list[TextNode]) -> list[TextNode]:
             if len(split) == 0:
                 raise ValueError("Link not found")
 
-            split_nodes.append(TextNode(split[0], TextTypes.TEXT))
+            if len(split[0]) > 0:
+                split_nodes.append(TextNode(split[0], TextTypes.TEXT))
             split_nodes.append(TextNode(anchor, TextTypes.LINK, url))
 
             if len(split) == 2:
@@ -132,6 +133,6 @@ def extract_markdown_links(text: str) -> list[tuple[str, str]]:
     Returns:
         list of tuples containing anchor text and URL
     """
-    pattern = r"[^!]\[(.*?)\]\((.+?)\)"
+    pattern = r"(?!!)\[(.*?)\]\((.+?)\)"
     found = re.findall(pattern, text)
     return found
