@@ -61,7 +61,9 @@ def codeblock_to_html(block: str) -> HTMLNode:
     code_node = TextNode(block[3:-3], TextTypes.TEXT)
     html_node = text_node_to_html_node(code_node)
 
-    return ParentNode([html_node], "code", None)
+    code_parent = ParentNode([html_node], "code", None)
+    # use pre tag to preserve newlines and whitespace
+    return ParentNode([code_parent], "pre", None)
 
 
 def heading_to_html(block: str) -> HTMLNode:

@@ -70,7 +70,7 @@ class TestMarkdownToHTMLUtils(unittest.TestCase):
 
         # Expected
         children = [LeafNode(None, code)]
-        expected = ParentNode(children, tag="code")
+        expected = ParentNode([ParentNode(children, tag="code")], "pre")
 
         self.assertEqual(html, expected)
 
