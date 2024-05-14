@@ -59,3 +59,36 @@ ul li .menu {
 li a {
     margin-left: 0%;
 }
+
+a:hover {
+    text-decoration: underline;
+}
+
+code {
+    background-color: #242424;
+    border-radius: 6px;
+    color: #d2a8ff;
+    padding: 0.2em 0.4em;
+    font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+pre code {
+    padding: 0;
+}
+
+pre {
+    background-color: #242424;
+    border-radius: 6px;
+    padding: 0.2em 0.4em;
+}
+
+blockquote {
+    background-color: #242424;
+    border-left: 4px solid #30363d;
+    padding-left: 2em;
+    margin-left: 0;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-right: 0.5em;
+    color: #8b949e;
+}
