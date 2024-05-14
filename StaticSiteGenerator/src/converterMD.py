@@ -4,7 +4,7 @@ import pathlib
 from src.markdownNodeGen import markdown_to_html
 
 
-def extract_title(markdown: str):
+def extract_title(markdown: str) -> str:
     lines = markdown.split("\n")
     for line in lines:
         if line.startswith("# "):
@@ -12,7 +12,7 @@ def extract_title(markdown: str):
     raise ValueError("No h1 header found, when it's required")
 
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path: str, template_path: str, dest_path: str) -> None:
     print(f"Generating page from file: {from_path} to: {dest_path}, using template {template_path}")
 
     if not os.path.exists(from_path):
@@ -41,7 +41,7 @@ def generate_page(from_path, template_path, dest_path):
         file.write(template)
 
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content: str, template_path: str, dest_dir_path: str) -> None:
     if not os.path.exists(dir_path_content):
         raise FileExistsError(f"{dir_path_content} doesn't exists")
 

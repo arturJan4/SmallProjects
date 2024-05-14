@@ -1,9 +1,14 @@
 import unittest
 
 from src.HTMLNode import LeafNode, ParentNode
-from src.markdownNodeGen import (codeblock_to_html, heading_to_html,
-                                 ordered_list_to_html, paragraph_to_html,
-                                 quoteblock_to_html, unordered_list_to_html)
+from src.markdownNodeGen import (
+    codeblock_to_html,
+    heading_to_html,
+    ordered_list_to_html,
+    paragraph_to_html,
+    quoteblock_to_html,
+    unordered_list_to_html,
+)
 
 
 class TestMarkdownToHTML(unittest.TestCase):

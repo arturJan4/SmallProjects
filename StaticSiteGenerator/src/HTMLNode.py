@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any, Optional, Union
 
 
 class HTMLNode:
@@ -6,13 +6,13 @@ class HTMLNode:
         self,
         tag: Optional[str] = None,
         value: Optional[str] = None,
-        children=None,
-        props=None,
+        children: Optional[list[Any]] = None,
+        props: Optional[dict[str, str]] = None,
     ) -> None:
-        self.tag = tag
-        self.value = value
-        self.children = children
-        self.props = props
+        self.tag: Optional[str] = tag
+        self.value: Optional[str] = value
+        self.children: Optional[list["HTMLNode"]] = children
+        self.props: Optional[dict[str, str]] = props
 
     def __eq__(self, value: Any) -> bool:
         if not isinstance(value, HTMLNode):
@@ -31,7 +31,7 @@ class HTMLNode:
         # string representation used for debugging
         return f"HTMLNode({self.tag}, {self.value}, {self.children}, {self.props})"
 
-    def to_html(self):
+    def to_html(self) -> str:
         # convert node to HTML that's possible to render
         raise NotImplementedError("to_html() not implemented")
 
@@ -56,10 +56,12 @@ class HTMLNode:
 
 class LeafNode(HTMLNode):
     # Leaf Node is a node that has no children under it
-    def __init__(self, tag=None, value=None, props=None) -> None:
+    def __init__(
+        self, tag: Optional[str] = None, value: Optional[str] = None, props: Optional[dict[str, str]] = None
+    ) -> None:
         super().__init__(tag, value, None, props)
 
-    def to_html(self):
+    def to_html(self) -> str:
         if self.value is None:
             raise ValueError("Leaf nodes must have a value")
 
@@ -73,10 +75,15 @@ class LeafNode(HTMLNode):
 
 class ParentNode(HTMLNode):
     # Parent Node is a node with other parent nodes or leaves as children
-    def __init__(self, children, tag=None, props=None) -> None:
+    def __init__(
+        self,
+        children: Optional[list["ParentNode"] | list[LeafNode]],
+        tag: Optional[str] = None,
+        props: Optional[dict[str, str]] = None,
+    ) -> None:
         super().__init__(tag, None, children, props)
 
-    def to_html(self):
+    def to_html(self) -> str:
         if self.children is None:
             raise ValueError("Parent nodes must have a children")
 

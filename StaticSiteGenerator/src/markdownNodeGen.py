@@ -4,7 +4,7 @@ from src.markdownText import TextNode, TextTypes, markdown_text_to_textNodes
 from src.textNode import text_node_to_html_node
 
 
-def markdown_to_html(markdown) -> HTMLNode:
+def markdown_to_html(markdown) -> ParentNode:
     """
     HTML is rendered as a big div with children inside being blocks.
     Each Block is rendered as a list of children with associated tag.
@@ -31,7 +31,7 @@ def markdown_to_html(markdown) -> HTMLNode:
     return ParentNode(div_children, "div", None)
 
 
-def paragraph_to_html(block: str) -> HTMLNode:
+def paragraph_to_html(block: str) -> ParentNode:
     children = []
     text_nodes = markdown_text_to_textNodes(block)
 
@@ -41,7 +41,7 @@ def paragraph_to_html(block: str) -> HTMLNode:
     return ParentNode(children, "p", None)
 
 
-def quoteblock_to_html(block: str) -> HTMLNode:
+def quoteblock_to_html(block: str) -> ParentNode:
     """Identified by > at start of every line"""
     children = []
 
@@ -56,7 +56,7 @@ def quoteblock_to_html(block: str) -> HTMLNode:
     return ParentNode(children, "blockquote", None)
 
 
-def codeblock_to_html(block: str) -> HTMLNode:
+def codeblock_to_html(block: str) -> ParentNode:
     """Identified by ``` at start and end. Treat inside as a text"""
     code_node = TextNode(block[3:-3], TextTypes.TEXT)
     html_node = text_node_to_html_node(code_node)
@@ -66,7 +66,7 @@ def codeblock_to_html(block: str) -> HTMLNode:
     return ParentNode([code_parent], "pre", None)
 
 
-def heading_to_html(block: str) -> HTMLNode:
+def heading_to_html(block: str) -> ParentNode:
     hashes, block = block.split(" ", maxsplit=1)
     strength = hashes.count("#")
     text_nodes = markdown_text_to_textNodes(block)
@@ -78,7 +78,7 @@ def heading_to_html(block: str) -> HTMLNode:
     return ParentNode(children, f"h{strength}", None)
 
 
-def unordered_list_to_html(block: str) -> HTMLNode:
+def unordered_list_to_html(block: str) -> ParentNode:
     """Each item should be enclosed in li tag"""
     children = []
 
@@ -97,7 +97,7 @@ def unordered_list_to_html(block: str) -> HTMLNode:
     return ParentNode(children, "ul", None)
 
 
-def ordered_list_to_html(block: str) -> HTMLNode:
+def ordered_list_to_html(block: str) -> ParentNode:
     """Each item should be enclosed in li tag"""
     children = []
 

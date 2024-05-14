@@ -11,24 +11,6 @@ class BlockTypes(StrEnum):
     ORDERED_LIST = auto()
 
 
-def markdown_to_blocks(markdown: str) -> list[str]:
-    """
-    Args:
-        markdown (str): raw multiline Markdown string
-
-    Returns:
-        list[str]: list of distinct blocks
-    """
-
-    # blocks are separated by a newline
-    split = markdown.split("\n\n")
-    # remove empty blocks
-    non_empty = filter(lambda x: len(x.strip()) > 0, split)
-    # remove leading and trailing whitespace
-    blocks = list(map(lambda x: x.strip(), non_empty))
-    return blocks
-
-
 def block_to_block_type(markdown_block: str) -> BlockTypes:
     # Headings start with 1-6 # characters, followed by a space and then the heading text.
     heading_pattern = r"#{1,6} \w+"
@@ -63,3 +45,21 @@ def block_to_block_type(markdown_block: str) -> BlockTypes:
         return BlockTypes.ORDERED_LIST
 
     return BlockTypes.PARAGRAPH
+
+
+def markdown_to_blocks(markdown: str) -> list[str]:
+    """
+    Args:
+        markdown (str): raw multiline Markdown string
+
+    Returns:
+        list[str]: list of distinct blocks
+    """
+
+    # blocks are separated by a newline
+    split = markdown.split("\n\n")
+    # remove empty blocks
+    non_empty = filter(lambda x: len(x.strip()) > 0, split)
+    # remove leading and trailing whitespace
+    blocks = list(map(lambda x: x.strip(), non_empty))
+    return blocks
