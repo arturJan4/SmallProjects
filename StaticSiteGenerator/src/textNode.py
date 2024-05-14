@@ -10,6 +10,7 @@ class TextTypes(StrEnum):
     ITALIC = ("italic",)
     CODE = ("code",)
     LINK = ("link",)
+    BREAK = ("break",)
     IMAGE = "image"
 
 
@@ -49,4 +50,6 @@ def text_node_to_html_node(text_node: "TextNode") -> LeafNode:
             value="",
             props={"src": text_node.url, "alt": text_node.text},
         )
+    elif text_node.text_type == TextTypes.BREAK.value:
+        return LeafNode(tag=None, value="<br>")
     raise ValueError(f"Text type ({text_node.text_type}) not recognized")

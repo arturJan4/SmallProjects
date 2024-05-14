@@ -47,7 +47,6 @@ class TestExtractingFromMarkdown(unittest.TestCase):
 
         self.assertEqual(actual, expected)
 
-
     def test_extract_markdown_links(self):
         text = "This is text with an [link text](example.com)."
         actual = extract_markdown_links(text)

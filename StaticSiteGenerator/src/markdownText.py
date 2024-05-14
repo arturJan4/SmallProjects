@@ -10,6 +10,7 @@ def markdown_text_to_textNodes(text: str) -> list[TextNode]:
     """
     nodes: list[TextNode] = [TextNode(text, TextTypes.TEXT)]
 
+    nodes = split_nodes_newline(nodes)
     nodes = split_nodes_delimiter(nodes, "**", TextTypes.BOLD)
     nodes = split_nodes_delimiter(nodes, "*", TextTypes.ITALIC)
     nodes = split_nodes_delimiter(nodes, "`", TextTypes.CODE)
@@ -17,6 +18,33 @@ def markdown_text_to_textNodes(text: str) -> list[TextNode]:
     nodes = split_nodes_link(nodes)
 
     return nodes
+
+
+def split_nodes_newline(old_nodes: list[TextNode]):
+    new_nodes: list[TextNode] = []
+
+    for old_node in old_nodes:
+        if old_node.text_type != TextTypes.TEXT.value:
+            # we only split TextNodes of type text
+            new_nodes.append(old_node)
+            continue
+
+        text_to_process = old_node.text
+        newline_idx = text_to_process.find("  \n")
+
+        split_nodes: list[TextNode] = []
+        while newline_idx != -1:
+            chunk_l = text_to_process[:newline_idx]
+            split_nodes.append(TextNode(chunk_l, TextTypes.TEXT))
+            split_nodes.append(TextNode("", TextTypes.BREAK))
+            text_to_process = text_to_process[newline_idx + 3 :]
+            newline_idx = text_to_process.find("  \n")
+
+        if len(text_to_process) > 0:
+            split_nodes.append(TextNode(text_to_process, TextTypes.TEXT))
+
+        new_nodes.extend(split_nodes)
+    return new_nodes
 
 
 def split_nodes_delimiter(old_nodes: list[TextNode], delimiter: str, text_type: TextTypes) -> list[TextNode]:
