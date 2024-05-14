@@ -29,13 +29,13 @@ class TestConvertTextToHTML(unittest.TestCase):
 
     def test_convert_html_bold(self):
         node = TextNode("text node", "bold")
-        expected = LeafNode(tag="b", value="text node")
+        expected = LeafNode(tag="strong", value="text node")
         actual = text_node_to_html_node(node)
         self.assertEqual(actual, expected)
 
     def test_convert_html_italic(self):
         node = TextNode("text node", "italic")
-        expected = LeafNode(tag="i", value="text node")
+        expected = LeafNode(tag="em", value="text node")
         actual = text_node_to_html_node(node)
         self.assertEqual(actual, expected)
 

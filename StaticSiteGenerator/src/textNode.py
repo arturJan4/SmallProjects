@@ -37,9 +37,9 @@ def text_node_to_html_node(text_node: "TextNode") -> LeafNode:
     if text_node.text_type == TextTypes.TEXT.value:
         return LeafNode(value=text_node.text)
     elif text_node.text_type == TextTypes.BOLD.value:
-        return LeafNode(tag="b", value=text_node.text)
+        return LeafNode(tag="strong", value=text_node.text)
     elif text_node.text_type == TextTypes.ITALIC.value:
-        return LeafNode(tag="i", value=text_node.text)
+        return LeafNode(tag="em", value=text_node.text)
     elif text_node.text_type == TextTypes.CODE.value:
         return LeafNode(tag="code", value=text_node.text)
     elif text_node.text_type == TextTypes.LINK.value:

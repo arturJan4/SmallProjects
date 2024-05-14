@@ -1,14 +1,9 @@
 import unittest
 
 from src.HTMLNode import LeafNode, ParentNode
-from src.markdownNodeGen import (
-    codeblock_to_html,
-    heading_to_html,
-    ordered_list_to_html,
-    paragraph_to_html,
-    quoteblock_to_html,
-    unordered_list_to_html,
-)
+from src.markdownNodeGen import (codeblock_to_html, heading_to_html,
+                                 ordered_list_to_html, paragraph_to_html,
+                                 quoteblock_to_html, unordered_list_to_html)
 
 
 class TestMarkdownToHTML(unittest.TestCase):
@@ -35,8 +30,8 @@ class TestMarkdownToHTMLUtils(unittest.TestCase):
 
         # Expected
         word = lambda x: LeafNode(None, x)
-        italic_word = LeafNode("i", "ll")
-        bold_word = LeafNode("b", "world")
+        italic_word = LeafNode("em", "ll")
+        bold_word = LeafNode("strong", "world")
 
         children = [word("he"), italic_word, word("o\n"), bold_word, word("\n")]
         expected = ParentNode(children, tag="p")
@@ -53,9 +48,9 @@ class TestMarkdownToHTMLUtils(unittest.TestCase):
 
         # Expected
         children = [LeafNode(None, "this is a quote\nby a ")]
-        children.append(LeafNode("b", "really"))
+        children.append(LeafNode("strong", "really"))
         children.append(LeafNode(None, " smart\n"))
-        children.append(LeafNode("i", "guy"))
+        children.append(LeafNode("em", "guy"))
         expected = ParentNode(children, tag="blockquote")
 
         self.assertEqual(html, expected)
