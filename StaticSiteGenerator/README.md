@@ -41,6 +41,7 @@ This is a project that aims to automate that conversion.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+![Markdown file and converted results](../images/static_site_generator.jpg)   
 
 
 ### Built With
