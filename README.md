@@ -34,6 +34,6 @@ Simple Conway's Game of Life using terminal **(colorama FTW!)** graphics
 ![Markdown file and converted results](images/static_site_generator.jpg)    
 [code](https://github.com/arturJan4/SmallProjects/tree/master/StaticSiteGenerator)  
 
-1. Generate static HTML pages from provided Markdown files all static elements.
+1. Generate static HTML pages from provided Markdown files and static elements.
 2. Generates sites recursively
 3. Unit-tested, type-tested, and linted 
